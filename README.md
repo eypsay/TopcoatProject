@@ -1,0 +1,1 @@
+In this beginner tutorial we build and run a complete server-rendered app called Shelf, starting from an empty project and ending with a working site. Everything is built in RustRover, tested in Google Chrome, and the JSON endpoints are tested with RustRover's built-in HTTP client.
