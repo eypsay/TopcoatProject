@@ -1,9 +1,31 @@
+mod books;
+
 use topcoat::{Result,
-              router::{Router,RouterBuilderDiscoverExt,page},
-view::{component,view}
+              router::{Router,RouterBuilderDiscoverExt,page,layout},
+              view::{component,view}
 };
 use topcoat::view::internal::view;
-
+use crate::books::Book;
+#[layout("/")]
+async fn root_layout(slot:Result) -> Result {
+    view!{
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <title>"SHELF"</title>
+                topcoat::dev::script()
+            </head>
+            <body>
+                <nav>
+                    <a href="/">"Shelf"</a>
+                    <span style="margin: 0 10px;">" "</span>
+                    <a href="/about">"About"</a>
+                </nav>
+                (slot?)
+            </body>
+        </html>
+    }
+}
 #[tokio::main]
 async fn  main() {
     topcoat::start(Router::builder().discover().build()).await.unwrap();
@@ -13,32 +35,41 @@ async fn  main() {
 
 #[page("/")]
 async fn home() -> Result {
+    let shelf=books::all();
     view!{
-        <!DOCTYPE html>
-        <html>
-            <head>
-                <title>"SHELF"</title>
-                topcoat::dev::script()
-            </head>
-            // <body>hello(name: "EEYP")</body>
-        <body>
-        book_card(title:"sefiller",
-            author:"Dost",
-            year: 2020,
-            finished:true
-        )
-        book_card(title:"reziller",
-            author:"hugo",
-            year: 2000,
-            finished:true
-        )
-        book_card(title:"filler",
-            author:"elt",
-            year: 2010,
-            finished:false
-        )
-        </body>
-        </html>
+        // <!DOCTYPE html>
+        // <html>
+        //     <head>
+        //         <title>"SHELF"</title>
+        //         topcoat::dev::script()
+        //     </head>
+        //     // <body>hello(name: "EEYP")</body>
+        //     <body>
+        //         // book_card(title: "sefiller", author: "Dost", year: 2020, finished: true)
+        //         // book_card(title: "reziller", author: "hugo", year: 2000, finished: true)
+        //         // book_card(title: "filler", author: "elt", year: 2010, finished: false)
+        <h1>
+            "MY Shelf ("
+            (shelf.len())
+            " books)"
+        </h1>
+        for book in shelf {
+            book_card(
+                title: book.title.as_str(),
+                author: book.author.as_str(),
+                year: book.year,
+                finished: book.finished
+            )
+        }
+        //         </body>
+        //     </html>
+        // }
+    }}
+#[page("/about")]
+async  fn about()->Result{
+    view!{
+        <h1>"About Shelf"</h1>
+        <p>" small reading list, built in rust with topcoat"</p>
     }
 }
 // #[component]
