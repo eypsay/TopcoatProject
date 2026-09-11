@@ -1,6 +1,4 @@
-use crate::__book_card_props::finished;
-
-#[derive(Clone)]
+#[derive(Clone, serde::Serialize, serde::Deserialize)]
 pub struct Book{
     pub id:u32,
     pub title:String,
