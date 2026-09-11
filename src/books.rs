@@ -12,6 +12,7 @@ pub fn all() -> Vec<Book> {
         Book{id:1,title: "sefiller".to_string(), author: "Dost".to_string(), year: 2020, finished: true},
         Book{id:2,title: "reziller".to_string(), author: "hugo".to_string(), year: 2000, finished: true},
         Book{id:3,title: "filler".to_string(), author: "elt".to_string(), year: 2010, finished: false},
+        Book{id:4,title: "cakallar".to_string(), author: "emily".to_string(), year: 2019, finished: true},
     ]
 }
 

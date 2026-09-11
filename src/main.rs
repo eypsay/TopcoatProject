@@ -3,7 +3,9 @@ mod layout;
 mod component;
 mod pages;
 
-use topcoat::{Result,
+use topcoat::{
+    asset::{AssetBundle,RouterBuilderAssetExt},
+    Result,
     router::{Router, RouterBuilderDiscoverExt,content::Json,route}};
 use topcoat::router::error::RouterErrorExt;
 use crate::books::Book;
@@ -19,7 +21,9 @@ async fn api_books() -> Result<Json<Vec<Book>>> {
 }
 #[tokio::main]
 async fn  main() {
-    topcoat::start(Router::builder().discover().build()).await.unwrap();
+    topcoat::start(Router::builder().discover().
+        assets(AssetBundle::load().unwrap()).
+        build()).await.unwrap();
 
     //println!("Hello, world!");
 }
